@@ -7,7 +7,8 @@ app.get('/ads', (req, resp) => {
         {id: 1, name: "Carlos"},
         {id: 2, name: "Joaquin"},
         {id: 3, name: "Maria"},
-        {id: 3, name: "João"},
+        {id: 4, name: "João"},
+        {id: 5, name: "Agar"},
     ])
 })
 
