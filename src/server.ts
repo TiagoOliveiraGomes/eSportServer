@@ -2,31 +2,74 @@ import express from "express";
 import { PrismaClient } from '@prisma/client'
 
 const app = express()
+app.use(express.json())
+const prisma = new PrismaClient()
 
-app.get('/games', (req, resp) => {
-    return resp.json([])
+
+app.get('/games', async (req, resp) => {
+    const games = await prisma.game.findMany({
+        include: {
+            _count: {
+                select: {
+                    ads: true,
+                }
+            }
+        }
+    })
+    return resp.json(games)
 })
 
-app.post('/ads', (req, resp) => {
-    return resp.status(201).json([])
+app.post('/games/:id/ads', (req, resp) => {
+    const gameId = req.params.id
+    const body = req.body
+    console.log(body)
+
+    return resp.status(201).json(body)
 })
 
-app.get('/games/:id/ads', (req, resp) => {
-    // const gameId = req.params.id;
+app.get('/games/:id/ads', async (req, resp) => {
+    const gameId = req.params.id;
+    const ads = await prisma.ad.findMany({
+        select: {
+            id: true,
+            name: true,
+            weekDays: true,
+            useVoiceChannel: true,
+            yearsPlaying: true,
+            hourStart: true,
+            hourEnd: true,
+        },
+        where: {
+            gameId,
+        },
+        orderBy: {
+            createAt: 'desc',
+        }
+    })
     
-    return resp.json([
-        {id: 1, name: "Carlos"},
-        {id: 2, name: "Joaquin"},
-        {id: 3, name: "Maria"},
-        {id: 4, name: "João"},
-        {id: 5, name: "Agar"},
-    ])
+    return resp.json(ads.map(ad => {
+        return {
+            ...ad,
+            weekDays: ad.weekDays.split(','),
+        }
+    }))
 })
 
-app.get('/ads/:id/discord', (req, resp) => {
-    // const gameId = req.params.id;
+app.get('/ads/:id/discord', async (req, resp) => {
+    const adId = req.params.id;
+
+    const ad = await prisma.ad.findUniqueOrThrow({
+        select: {
+            discord: true,
+        },
+        where: {
+            id: adId,
+        }
+    })
     
-    return resp.json([])
+    return resp.json({
+        discord: ad.discord
+    })
 })
 
 app.listen(3333)
