@@ -1,6 +1,9 @@
 # eSportServer
 
+Imagem de exemplo em uma aplicação web
 ![image](https://user-images.githubusercontent.com/70171892/191591854-1a9d8c68-8a9d-43e6-afe0-9e6adb4f397a.png)
+
+Imagem usada utilizando o comando ```npx prisma studio```. 
 ![image](https://user-images.githubusercontent.com/70171892/191597212-99ef355b-f8fc-4ee3-9a9d-f7a27ce06ecb.png)
 
 
