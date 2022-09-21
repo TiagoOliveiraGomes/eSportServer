@@ -36,7 +36,7 @@ $ npm install ou yarn
 ```javascript
 $ npm run dev ou yarn run dev
 ```
-
+#
 Imagem usada utilizando o comando ```npx prisma studio```. 
 ![image](https://user-images.githubusercontent.com/70171892/191597212-99ef355b-f8fc-4ee3-9a9d-f7a27ce06ecb.png)
 
